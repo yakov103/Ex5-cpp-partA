@@ -17,21 +17,7 @@ namespace ariel
     }
     bool OrgChart::add_sub(Node &node, string &parent, string &child)
     {
-        if (!node.name.compare(parent))
-        {
-            Node temp;
-            temp.name = child;
-            node.children.push_back(temp);
-            return true;
-        }
-        for (size_t i = 0; i < node.children.size(); i++)
-        {
-            if (add_sub(node.children[i], parent, child))
-            {
-                return true;
-            }
-        }
-        return false;
+        return true ; 
     }
     string *OrgChart::begin_level_order()
     {
