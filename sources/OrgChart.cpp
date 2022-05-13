@@ -2,87 +2,90 @@
 using namespace std;
 namespace ariel
 {
-    OrgChart &OrgChart::add_root(string name)
-    {
-        root.name = name;
+    OrgChart &OrgChart::add_root(string role){
+        root.role = role;
         return *this;
     }
-    OrgChart &OrgChart::add_sub(string parent, string child)
-    {
-        if (!add_sub(root, parent, child))
-        {
-            throw "You need to init the Org ";
-        }
-        return *this;
-    }
-    bool OrgChart::add_sub(Node &node, string &parent, string &child)
-    {
+  
+    bool OrgChart::add_sub(Node &node, string &parent, string &child){
         return true ; 
+    }
+      OrgChart &OrgChart::add_sub(string parent, string child) {
+        return *this;
     }
     string *OrgChart::begin_level_order()
     {
-        begin_iter_level_order.clear();
-        begin_iter_level_order.push_back(root.name);
+        iter_vec_level.clear(); // clear the vector
+        iter_vec_level.push_back(root.role);
         fill_level_order(root);
-        return &begin_iter_level_order[0];
+        return &iter_vec_level[0];
     }
+
     void OrgChart::fill_level_order(Node &node)
     {
-        for (size_t i = 0; i < node.children.size(); i++)
+
+        for (unsigned int i = 0; i < node.children.size(); i++)
         {
-            begin_iter_level_order.push_back(node.children[i].name);
+            iter_vec_level.push_back(node.children[i].role);
         }
-        for (size_t i = 0; i < node.children.size(); i++)
+        for (unsigned int i = 0; i < node.children.size(); i++)
         {
             fill_level_order(node.children[i]);
         }
+
     }
     string *OrgChart::end_level_order()
     {
-        return &begin_iter_level_order[begin_iter_level_order.size()];
+        return &iter_vec_level[iter_vec_level.size()];
     }
 
     string *OrgChart::begin_reverse_order()
     {
-        begin_iter_reverse_order.clear();
-        begin_iter_reverse_order.insert(begin_iter_reverse_order.begin(), root.name);
-        fill_reverse_order(root);
-        return &begin_iter_reverse_order[0];
+        iter_vec_level.clear(); // clear the vector
+        iter_vec_level.push_back(root.role);
+        fill_level_order(root);
+        return &iter_vec_level[0];
+
     }
     void OrgChart::fill_reverse_order(Node &node)
     {
-        for (int i = node.children.size() - 1; i >= 0; i--)
+         for (unsigned int i = 0; i < node.children.size(); i++)
         {
-            begin_iter_reverse_order.insert(begin_iter_reverse_order.begin(), node.children[(size_t)i].name);
+            iter_vec_level.push_back(node.children[i].role);
         }
-        for (int i = node.children.size() - 1; i >= 0; i--)
+        for (unsigned int i = 0; i < node.children.size(); i++)
         {
-            fill_reverse_order(node.children[(size_t)i]);
+            fill_level_order(node.children[i]);
         }
     }
     string *OrgChart::reverse_order()
     {
-        return &begin_iter_reverse_order[begin_iter_reverse_order.size()];
+        return &iter_vec_level[iter_vec_level.size()];
     }
 
     string *OrgChart::begin_preorder()
     {
-        begin_iter_preorder.clear();
-        fill_preorder(root);
-        return &begin_iter_preorder[0];
+          iter_vec_level.clear(); // clear the vector
+        iter_vec_level.push_back(root.role);
+        fill_level_order(root);
+        return &iter_vec_level[0];
     }
     void OrgChart::fill_preorder(Node &node)
     {
-        begin_iter_preorder.push_back(node.name);
-        for (size_t i = 0; i < node.children.size(); i++)
+            for (unsigned int i = 0; i < node.children.size(); i++)
         {
-            fill_preorder(node.children[i]);
+            iter_vec_level.push_back(node.children[i].role);
+        }
+        for (unsigned int i = 0; i < node.children.size(); i++)
+        {
+            fill_level_order(node.children[i]);
         }
     }
     string *OrgChart::end_preorder()
     {
-        return &begin_iter_preorder[begin_iter_preorder.size()];
+        return &iter_vec_level[iter_vec_level.size()];
     }
+    
     ostream &operator<<(ostream &os, OrgChart &org)
     {
         for (auto it = org.begin_preorder(); it != org.end_preorder(); ++it)

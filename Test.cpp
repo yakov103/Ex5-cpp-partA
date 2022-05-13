@@ -55,7 +55,7 @@ TEST_CASE("OrgChart")
             if (9 <= i && i < 12){
             token = *it;
             forchild = "greatgrandchild";
-            forchild += to_string(i%4+1+1);
+            forchild += to_string(i%4+1);
             CHECK(token == forchild);
             i++; 
             continue;

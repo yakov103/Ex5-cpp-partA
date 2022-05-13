@@ -7,7 +7,7 @@ namespace ariel
 {
     struct Node
     {
-        string name;
+        string role;
         vector<Node> children;
     };
     class OrgChart
@@ -15,16 +15,18 @@ namespace ariel
     private:
         Node root;
         bool add_sub(Node &node, string &parent, string &child);
-        vector<string> begin_iter_level_order;
+        vector<string> iter_vec_level;
+        vector<string> iter_vec_reverse;
+        vector<string> iter_vec_preorder;
+        
         void fill_level_order(Node &node);
-        vector<string> begin_iter_reverse_order;
         void fill_reverse_order(Node &node);
-        vector<string> begin_iter_preorder;
         void fill_preorder(Node &node);
+
 
     public:
         // OrgChart();
-        OrgChart &add_root(string name);
+        OrgChart &add_root(string role);
         OrgChart &add_sub(string parent, string child);
 
         string *begin_level_order();
