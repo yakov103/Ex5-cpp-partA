@@ -11,7 +11,7 @@ namespace ariel
     {
         if (!add_sub(root, parent, child))
         {
-            throw runtime_error(parent + " does not exist in the organization");
+            throw "You need to init the Org ";
         }
         return *this;
     }
@@ -87,7 +87,7 @@ namespace ariel
     {
         for (auto it = org.begin_preorder(); it != org.end_preorder(); ++it)
         {
-            os << (*it) << ", ";
+            os << (*it) << " ";
         }
         return os;
     }
