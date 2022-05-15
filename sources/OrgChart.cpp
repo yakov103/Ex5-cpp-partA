@@ -49,36 +49,26 @@ namespace ariel
             fill_level_order(node.children[i]);
         }
     }
-    string *OrgChart::reverse_order()
-    {
-        return &iter_vec_level[iter_vec_level.size()];
-    }
+    string *OrgChart::reverse_order(){return &iter_vec_level[iter_vec_level.size()];}
 
     string *OrgChart::begin_preorder()
     {
-          iter_vec_level.clear(); // clear the vector
+        if (iter_vec_preorder.size() != 0){
+           iter_vec_preorder.clear(); // clear the vector
+        }
         iter_vec_level.push_back(root.role);
-        fill_level_order(root);
         return &iter_vec_level[0];
     }
     void OrgChart::fill_preorder(Node &node)
-    {
-  
-    }
-    string *OrgChart::end_preorder()
-    {
-        return &iter_vec_level[iter_vec_level.size()];
-    }
+    {}
+    string *OrgChart::end_preorder(){return &iter_vec_level[iter_vec_level.size()]; }
     
-    ostream &operator<<(ostream &COUT, OrgChart &org)
-    {
+    ostream &operator<<(ostream &COUT, OrgChart &org){
         for (auto it = org.begin_preorder(); it != org.end_preorder(); ++it)
         {
-            COUT << (*it) << " ";
-            COUT << endl; 
+            COUT << (*it); // print the string
+            COUT << endl;  // print the endline
         }
-
-
         return COUT;
     }
 }
