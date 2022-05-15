@@ -102,7 +102,9 @@ namespace ariel
             iter_vec_level.push_back(node.children[i].role);
             iter_vec_height.push_back(node.children[i].level);
         }
-        for (i = 0; i < node.children.size(); i++){fill_level_order(node.children[i]);}
+        for (int j = 0; j < node.children.size(); j++){
+            fill_level_order(node.children[(unsigned int )(j)]);
+            }
     }
 
     /*
@@ -110,7 +112,13 @@ namespace ariel
      * @return - the begin of the reverse order.
      */
 
-    string *OrgChart::end_level_order() { return &iter_vec_level[iter_vec_level.size()]; }
+    string *OrgChart::end_level_order() { 
+        if (iter_vec_level.size() == 0)
+        {
+           throw "The level order is empty";
+        }
+        return &iter_vec_level[iter_vec_level.size()];
+         }
 
     /*
      * This function is used to get the begin of the reverse order.
@@ -153,7 +161,13 @@ namespace ariel
      * @return - the begin of the preorder.
      */
 
-    string *OrgChart::reverse_order() { return &iter_vec_reverse[iter_vec_reverse.size()]; }
+    string *OrgChart::reverse_order() { 
+        if (iter_vec_reverse.size() == 0)
+        {
+           throw "The reverse order is empty";
+        }
+
+        return &iter_vec_reverse[iter_vec_reverse.size()]; }
 
     /*
      * This function is used to get the begin of the preorder.
@@ -184,7 +198,12 @@ namespace ariel
             if (node.children[i].children.size() != 0){fill_preorder(node.children[i]);}
     }
     }
-    string *OrgChart::end_preorder() { return &iter_vec_preorder[iter_vec_preorder.size()]; }
+    string *OrgChart::end_preorder() {
+        if (iter_vec_preorder.size() == 0)
+        {
+           throw "The preorder is empty";
+        }
+         return &iter_vec_preorder[iter_vec_preorder.size()]; }
 
     /*
      * Os stram operator for printing.
