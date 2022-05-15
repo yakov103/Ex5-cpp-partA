@@ -11,6 +11,7 @@ namespace ariel
     struct Node
     {
         string role;
+        unsigned int level;
         vector<Node> children;
     };
 
@@ -19,8 +20,10 @@ namespace ariel
     {
     private:
         Node root;
-        bool add_sub(Node &node, string &parent, string &child);
+        bool check_parent(string &parent, string &child, Node &node);
+        unsigned int max_level;
         vector<string> iter_vec_level;
+        vector<unsigned int> iter_vec_height; 
         vector<string> iter_vec_reverse;
         vector<string> iter_vec_preorder;
         

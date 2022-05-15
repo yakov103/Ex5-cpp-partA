@@ -28,91 +28,82 @@ TEST_CASE("Good case ")
         string token; 
         string forchild;  
 
+
+        OrgChart organization;
+        CHECK_NOTHROW(organization.add_root("CEO")); // add root
+        CHECK_NOTHROW(organization.add_sub("CEO", "CTO"));          // Now the CTO is subordinate to the CEO
+        CHECK_NOTHROW(organization.add_sub("CEO", "CFO"));         // Now the CFO is subordinate to the CEO
+        CHECK_NOTHROW(organization.add_sub("CEO", "COO"));        // Now the COO is subordinate to the CEO
+        CHECK_NOTHROW(organization.add_sub("CTO", "VP_SW")); // Now the VP Software is subordinate to the CTO
+        CHECK_NOTHROW(organization.add_sub("COO", "VP_BI"));      // Now the VP_BI is subordinate to the COO
+
+        cout << organization << endl; /* Prints the org chart in a reasonable format. For example:
+       CEO
+       |--------|--------|
+       CTO      CFO      COO
+       |                 |
+       VP_SW             VP_BI
+ */
+    token.clear(); 
+  for (auto it = organization.begin_level_order(); it != organization.end_level_order(); ++it){token += *it + " " ;}
+  
+  CHECK (token == "CEO CTO CFO COO VP_SW VP_BI " );
+  token.clear();
+  for (auto it = organization.begin_reverse_order(); it != organization.reverse_order(); ++it){token += *it + " " ;}
+    CHECK (token == "VP_SW VP_BI CTO CFO COO CEO " );
+    token.clear();
+  for (auto it=organization.begin_preorder(); it!=organization.end_preorder(); ++it) {token += *it + " " ;}
+    CHECK (token == "CEO CTO VP_SW CFO COO VP_BI " );
+    token.clear();
+
+  // demonstrate the arrow operator:
+  for (auto it = organization.begin_level_order(); it != organization.end_level_order(); ++it)
+  {
+    cout << it->size() << " " ;
+  } 
+        
+
         //  level order 
-        int i = 0 ; 
-        for (auto it = org.begin_level_order(); it != org.end_level_order(); it++) {
-            if (i == 0 ){
-                CHECK (*it == "root");
-                i++;
-                continue;
-            }
-            if (i <= 4){
-            token = *it;
-            forchild = "child"; 
-            forchild += to_string(i);
-            CHECK(token == forchild);
-            printf("%s\n", token.c_str());
-            i++;
-            continue;
-            }
-            if (5 <= i && i < 8){
-            token = *it;
-            forchild = "grandchild"; 
-            forchild += to_string(i%4);
-            printf("%s\n", token.c_str());
-            CHECK(token == forchild);
-            i++; 
-            continue;
-            }
-            if (9 <= i && i < 12){
-            token = *it;
-            forchild = "greatgrandchild";
-            forchild += to_string(i%4+1);
-            CHECK(token == forchild);
-            i++; 
-            continue;
-            }
+        // int i = 0 ; 
+        // for (auto it = org.begin_level_order(); it != org.end_level_order(); it++) {
+        //     if (i == 0 ){
+        //         CHECK (*it == "root");
+        //         i++;
+        //         continue;
+        //     }
+        //     if (i <= 4){
+        //     token = *it;
+        //     forchild = "child"; 
+        //     forchild += to_string(i);
+        //     CHECK(token == forchild);
+        //     printf("%s\n", token.c_str());
+        //     i++;
+        //     continue;
+        //     }
+        //     if (5 <= i && i < 8){
+        //     token = *it;
+        //     forchild = "grandchild"; 
+        //     forchild += to_string(i%4);
+        //     printf("%s\n", token.c_str());
+        //     CHECK(token == forchild);
+        //     i++; 
+        //     continue;
+        //     }
+        //     if (9 <= i && i < 12){
+        //     token = *it;
+        //     forchild = "greatgrandchild";
+        //     forchild += to_string(i%4+1);
+        //     CHECK(token == forchild);
+        //     i++; 
+        //     continue;
+        //     }
         
 
         
     }
+     
     // check revese order
-    vector<string> collect_to_reverse ; 
-    collect_to_reverse.clear();
-       for (auto it = org.begin_level_order(); it != org.end_level_order(); it++) {
-            if (i == 0 ){
-                CHECK (*it == "root");
-                i++;
-                continue;
-            }
-            if (i <= 4){
-            token = *it;
-            collect_to_reverse.push_back(token);
-            forchild = "child"; 
-            forchild += to_string(i);
-            CHECK(token == forchild);
-            printf("%s\n", token.c_str());
-            i++;
-            continue;
-            }
-            if (5 <= i && i < 8){
-            token = *it;
-            collect_to_reverse.push_back(token);
-            forchild = "grandchild"; 
-            forchild += to_string(i%4);
-            printf("%s\n", token.c_str());
-            CHECK(token == forchild);
-            i++; 
-            continue;
-            }
-            if (9 <= i && i < 12){
-            token = *it;
-            collect_to_reverse.push_back(token);
-            forchild = "greatgrandchild";
-            forchild += to_string(i%4+1);
-            CHECK(token == forchild);
-            i++; 
-            continue;
-            }
-        
-       }
-        reverse(collect_to_reverse.begin(), collect_to_reverse.end());
-        for (auto it = org.begin_reverse_order(); it != org.reverse_order(); it++) {
-            CHECK (*it == collect_to_reverse.back()); // check if the reverse order is correct
-            collect_to_reverse.pop_back(); // remove the last element from the vector
-        }
 
-    }
 TEST_CASE("Bad cases"){
 
     OrgChart org; 
