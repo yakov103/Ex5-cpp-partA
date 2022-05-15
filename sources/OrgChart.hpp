@@ -1,6 +1,9 @@
 #include <iostream>
-#include <string>
+#include <fstream>
+#include <sstream>
 #include <vector>
+#include <string>
+#include <algorithm>
 #include <deque>
 using namespace std;
 namespace ariel
@@ -10,6 +13,8 @@ namespace ariel
         string role;
         vector<Node> children;
     };
+
+
     class OrgChart
     {
     private:
@@ -26,21 +31,17 @@ namespace ariel
 
     public:
         // OrgChart();
+        // ~OrgChart();
         OrgChart &add_root(string role);
         OrgChart &add_sub(string parent, string child);
-
         string *begin_level_order();
         string *end_level_order();
-
         string *begin_reverse_order();
         string *reverse_order();
-
         string *begin_preorder();
         string *end_preorder();
-
         string *begin(){return begin_level_order();}
         string *end(){return end_level_order();}
-        // ~OrgChart();
         friend ostream &operator<<(ostream &os, OrgChart &root);
     };
 }
