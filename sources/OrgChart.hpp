@@ -10,8 +10,8 @@ namespace ariel
 {
     struct Node
     {
-        string role;
         unsigned int level;
+        string role;
         vector<Node> children;
     };
 
@@ -26,7 +26,6 @@ namespace ariel
         vector<unsigned int> iter_vec_height; 
         vector<string> iter_vec_reverse;
         vector<string> iter_vec_preorder;
-        
         void fill_level_order(Node &node);
         void fill_reverse_order(Node &node);
         void fill_preorder(Node &node);
@@ -38,10 +37,10 @@ namespace ariel
         OrgChart &add_root(string role);
         OrgChart &add_sub(string parent, string child);
         string *begin_level_order();
-        string *end_level_order();
         string *begin_reverse_order();
-        string *reverse_order();
         string *begin_preorder();
+        string *end_level_order();
+        string *reverse_order();
         string *end_preorder();
         string *begin(){return begin_level_order();}
         string *end(){return end_level_order();}

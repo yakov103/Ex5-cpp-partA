@@ -75,10 +75,12 @@ namespace ariel
         if (iter_vec_level.size() != 0)
         {
             iter_vec_level.clear(); // clear the vector
-            iter_vec_height.clear();
         }
-        iter_vec_level.push_back(root.role); // push the root to the vector
-        iter_vec_height.push_back(0);        // push the height of the root to the vector
+        if (iter_vec_level.size() == 0)
+        {
+            iter_vec_level.push_back(root.role);
+        }
+         // push the root to the vector 
         fill_level_order(root);              // fill the vector with the level order
 
         return &iter_vec_level[0]; // return the first element of the vector
@@ -96,15 +98,11 @@ namespace ariel
     void OrgChart::fill_level_order(Node &node)
     {
         unsigned int i = 0;
-        for (i = 0; i < node.children.size(); i++)
-        {
+        for (i = 0; i < node.children.size(); i++){
             iter_vec_level.push_back(node.children[i].role);
             iter_vec_height.push_back(node.children[i].level);
         }
-        for (i = 0; i < node.children.size(); i++)
-        {
-            fill_level_order(node.children[i]);
-        }
+        for (i = 0; i < node.children.size(); i++){fill_level_order(node.children[i]);}
     }
 
     /*
@@ -119,11 +117,16 @@ namespace ariel
      * @return - the begin of the reverse order.
      */
 
-    string *OrgChart::begin_reverse_order()
-    {
-        iter_vec_reverse.clear(); // clear the vector
-
-        iter_vec_reverse.insert(iter_vec_reverse.begin(), root.role); // push the root to the vector
+    string *OrgChart::begin_reverse_order(){
+        if (iter_vec_reverse.size() != 0)
+        {
+            iter_vec_reverse.clear(); // clear the vector
+        }
+        if ( iter_vec_reverse.size() == 0)
+        {
+            iter_vec_reverse.insert(iter_vec_reverse.begin(), root.role); // push the root to the vector
+        }
+        
         fill_reverse_order(root);
         return &iter_vec_reverse[0]; // return the first element of the vector
     }
@@ -159,30 +162,27 @@ namespace ariel
 
     string *OrgChart::begin_preorder()
     {
-
-        iter_vec_preorder.clear(); // clear the vector 
-        iter_vec_preorder.push_back(root.role); // push the root to the vector
+        if (iter_vec_preorder.size() != 0)
+        {
+            iter_vec_preorder.clear(); // clear the vector
+        }
+        if (iter_vec_preorder.size() == 0)
+        {
+            iter_vec_preorder.push_back(root.role); // push the root to the vector
+        }
         fill_preorder(root);
         return &iter_vec_preorder[0];
     }
 
     /*
-    * preorder is a tree traversal algorithn using depth first search.
-    * @return - the end of the preorder.
-    */ 
-    void OrgChart::fill_preorder(Node &node)
-    {
-        for (unsigned int i = 0; i < node.children.size(); i++)
-        {
-           
+     * preorder is a tree traversal algorithn using depth first search.
+     * @return - the end of the preorder.
+     */
+    void OrgChart::fill_preorder(Node &node){
+        for (unsigned int i = 0; i < node.children.size(); i++) {
             iter_vec_preorder.push_back(node.children[i].role); // push the children to the vector
-            if (node.children[i].children.size() != 0)
-            {
-                fill_preorder(node.children[i]);
-            }
-        }
-
-
+            if (node.children[i].children.size() != 0){fill_preorder(node.children[i]);}
+    }
     }
     string *OrgChart::end_preorder() { return &iter_vec_preorder[iter_vec_preorder.size()]; }
 
