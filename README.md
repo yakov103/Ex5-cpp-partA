@@ -1,3 +1,6 @@
+![image](https://user-images.githubusercontent.com/66936716/168467309-be4a0613-97dc-4f08-97e8-edc8a7ff1402.png)
+
+
 <div dir="rtl" lang="he">
 
 # טבלה ארגונית עם איטרטורים
