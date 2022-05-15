@@ -26,7 +26,9 @@ TEST_CASE("Good case ")
         CHECK_NOTHROW(org.add_sub("child4", "grandchild4"));
         CHECK_NOTHROW(org.add_sub("grandchild4", "greatgrandchild4"));
         string token; 
-        string forchild; 
+        string forchild;  
+
+        //  level order 
         int i = 0 ; 
         for (auto it = org.begin_level_order(); it != org.end_level_order(); it++) {
             if (i == 0 ){
@@ -64,7 +66,7 @@ TEST_CASE("Good case ")
 
         
     }
-
+    // check revese order
     vector<string> collect_to_reverse ; 
     collect_to_reverse.clear();
        for (auto it = org.begin_level_order(); it != org.end_level_order(); it++) {
@@ -109,6 +111,7 @@ TEST_CASE("Good case ")
             CHECK (*it == collect_to_reverse.back()); // check if the reverse order is correct
             collect_to_reverse.pop_back(); // remove the last element from the vector
         }
+
     }
 TEST_CASE("Bad cases"){
 
